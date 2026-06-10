@@ -39,10 +39,10 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           AFFILIATE_TAG: ${{ secrets.AFFILIATE_TAG }}
           MIN_DISCOUNT_PERCENT: '10'
-          MAX_DISCOUNT_PERCENT: '30'
           MAX_PRODUCTS_PER_RUN: '10'
           DELAY_BETWEEN_MESSAGES: '2'
           HEADLESS: 'true'
+          FORCE_SEND_ALL: 'false'
           WDM_CACHE_PATH: /home/runner/.wdm
         run: |
           mkdir -p /home/runner/.wdm
