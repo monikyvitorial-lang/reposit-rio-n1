@@ -46,9 +46,18 @@ def run_bot():
             affiliate_url = build_affiliate_url(product.get("url", ""))
             product["affiliate_url"] = affiliate_url
 
-            should_send = Config.FORCE_SEND_ALL or product.get("discount", 0) >= Config.MIN_DISCOUNT_PERCENT
+            discount = product.get("discount", 0)
+            within_range = Config.MIN_DISCOUNT_PERCENT <= discount <= Config.MAX_DISCOUNT_PERCENT
+            should_send = Config.FORCE_SEND_ALL or within_range
             if not should_send:
-                logger.info(f"  → Ignorando (desconto abaixo do mínimo): {product.get('title','-')[:60]} | {product.get('discount')}")
+                reason = (
+                    "desconto abaixo do mínimo"
+                    if discount < Config.MIN_DISCOUNT_PERCENT
+                    else "desconto acima do máximo"
+                )
+                logger.info(
+                    f"  → Ignorando ({reason}): {product.get('title','-')[:60]} | {discount}"
+                )
                 continue
 
             success = sender.send_deal(product)

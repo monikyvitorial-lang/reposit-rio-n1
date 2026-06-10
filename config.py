@@ -24,6 +24,9 @@ class Config:
     # Minimum discount % to send (0 = send everything)
     MIN_DISCOUNT_PERCENT: int = int(os.getenv("MIN_DISCOUNT_PERCENT", "20"))
 
+    # Maximum discount % to send (useful to keep range narrow)
+    MAX_DISCOUNT_PERCENT: int = int(os.getenv("MAX_DISCOUNT_PERCENT", "30"))
+
     # How often to check for new deals (minutes)
     CHECK_INTERVAL_MINUTES: int = int(os.getenv("CHECK_INTERVAL_MINUTES", "60"))
 
