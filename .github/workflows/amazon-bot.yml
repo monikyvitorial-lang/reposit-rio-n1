@@ -38,7 +38,7 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           AFFILIATE_TAG: ${{ secrets.AFFILIATE_TAG }}
-          MIN_DISCOUNT_PERCENT: '20'
+          MIN_DISCOUNT_PERCENT: '10'
           MAX_DISCOUNT_PERCENT: '30'
           MAX_PRODUCTS_PER_RUN: '10'
           DELAY_BETWEEN_MESSAGES: '2'
