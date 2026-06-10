@@ -6,6 +6,7 @@ import re
 import time
 import random
 import logging
+import shutil
 from typing import Optional
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -39,7 +40,16 @@ class AmazonScraper:
         options.add_experimental_option("useAutomationExtension", False)
         options.add_argument("--window-size=1920,1080")
 
-        service = Service(ChromeDriverManager().install())
+        # Tentar usar chromedriver do sistema (GitHub Actions)
+        chromedriver_path = shutil.which("chromedriver")
+        if chromedriver_path:
+            logger.info(f"Usando chromedriver do sistema: {chromedriver_path}")
+            service = Service(chromedriver_path)
+        else:
+            # Fallback: usar webdriver-manager (desenvolvimento local)
+            logger.info("Usando webdriver-manager para baixar chromedriver")
+            service = Service(ChromeDriverManager().install())
+
         driver = webdriver.Chrome(service=service, options=options)
 
         # Hide webdriver flag
