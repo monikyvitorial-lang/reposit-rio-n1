@@ -1,10 +1,7 @@
-name: Amazon Bot - Rodada Diária
+name: Amazon Bot - TESTE (Debug)
 
 on:
-  schedule:
-    # Executa às 09:00 UTC (6:00 AM em Brasília) todos os dias
-    - cron: '0 9 * * *'
-  workflow_dispatch:  # Permite executar manualmente
+  workflow_dispatch:  # Apenas manual
 
 jobs:
   scrape-and-send:
@@ -33,23 +30,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
-      - name: Executar bot
+      - name: Executar bot em MODO DEBUG
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           AFFILIATE_TAG: ${{ secrets.AFFILIATE_TAG }}
-          MIN_DISCOUNT_PERCENT: '15'
-          MAX_PRODUCTS_PER_RUN: '15'
-          DELAY_BETWEEN_MESSAGES: '2'
+          MIN_DISCOUNT_PERCENT: '5'
           HEADLESS: 'true'
+          FORCE_SEND_ALL: 'true'
           WDM_CACHE_PATH: /home/runner/.wdm
         run: |
           mkdir -p /home/runner/.wdm
+          echo "🧪 MODO DEBUG: MIN_DISCOUNT_PERCENT=5%, FORCE_SEND_ALL=true"
           python bot.py
-      
-      - name: Notificar em caso de falha
-        if: failure()
-        run: |
-          echo "❌ Bot falhou na execução"
-          echo "Verifique os logs acima para detalhes"
-        continue-on-error: true
