@@ -26,11 +26,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             chromium-browser \
-            chromium-chromedriver \
-            fonts-liberation \
-            libappindicator1 \
-            libappindicator3-1 \
-            libxss1
+            chromium-chromedriver
       
       - name: Instalar dependências Python
         run: |
