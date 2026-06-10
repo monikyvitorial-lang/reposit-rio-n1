@@ -66,8 +66,15 @@ class AmazonScraper:
         # 1. Amazon Deals page
         products += self._scrape_deals_page()
 
-        # 2. Keyword searches
-        for keyword in Config.SEARCH_KEYWORDS[: 3]:  # limit to 3 keywords
+        # 2. Configured Amazon URLs (discount ranges)
+        for url in Config.AMAZON_URLS:
+            if url.endswith("/deals"):
+                continue
+            products += self._scrape_url(url)
+            time.sleep(random.uniform(2, 4))
+
+        # 3. Keyword searches
+        for keyword in Config.SEARCH_KEYWORDS[:3]:  # limit to 3 keywords
             products += self._scrape_search(keyword.strip())
             time.sleep(random.uniform(2, 4))
 
@@ -120,6 +127,11 @@ class AmazonScraper:
             "&sort=price-asc-rank"
         )
         logger.info(f"Buscando '{keyword}'...")
+        return self._scrape_url(url, keyword)
+
+    def _scrape_url(self, url: str, label: str = None) -> list[dict]:
+        """Scrape a generic Amazon search URL"""
+        logger.info(f"Acessando URL de busca: {label or url}")
         products = []
 
         try:
@@ -131,7 +143,7 @@ class AmazonScraper:
                 "div[data-component-type='s-search-result']"
             )
 
-            logger.info(f"  → {len(items)} resultados para '{keyword}'")
+            logger.info(f"  → {len(items)} resultados em {label or url}")
 
             for item in items[:8]:
                 product = self._parse_search_result(item)
@@ -139,7 +151,7 @@ class AmazonScraper:
                     products.append(product)
 
         except Exception as e:
-            logger.warning(f"Erro ao buscar '{keyword}': {e}")
+            logger.warning(f"Erro ao buscar URL '{label or url}': {e}")
 
         return products
 

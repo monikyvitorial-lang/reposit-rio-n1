@@ -47,7 +47,10 @@ class Config:
     # Amazon pages to scrape (can add more)
     AMAZON_URLS: list = [
         "https://www.amazon.com.br/deals",
-        "https://www.amazon.com.br/s?i=electronics&rh=p_n_pct-off-with-tax%3A20-100%25&sort=price-asc-rank",
+        "https://www.amazon.com.br/s?i=electronics&rh=p_n_pct-off-with-tax%3A10-15%25&sort=price-asc-rank",
+        "https://www.amazon.com.br/s?i=electronics&rh=p_n_pct-off-with-tax%3A15-20%25&sort=price-asc-rank",
+        "https://www.amazon.com.br/s?i=electronics&rh=p_n_pct-off-with-tax%3A20-25%25&sort=price-asc-rank",
+        "https://www.amazon.com.br/s?i=electronics&rh=p_n_pct-off-with-tax%3A25-30%25&sort=price-asc-rank",
     ]
 
     # Categories to search (used as keywords)
